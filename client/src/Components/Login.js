@@ -56,6 +56,8 @@ export default class Login extends Component {
     render() {
         return (
             <div className="container">
+            <h3>Sign in</h3>
+
                 <Form onSubmit={this.onSubmit}>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Email</Form.Label>
@@ -78,8 +80,8 @@ export default class Login extends Component {
                             required
                         />
                     </Form.Group>
-                    { this.state.iserror ? <div className='errorMessage'>Invalid Credentials</div> : <div></div> }
-                    <Button variant="dark" type="submit">
+                    { this.state.iserror ? <div style={{ color: "red"}}className='errorMessage'>Invalid Credentials</div> : <div></div> }
+                    <Button variant="outline-light" type="submit">
                         Login
                     </Button>
                 </Form>

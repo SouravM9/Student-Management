@@ -114,7 +114,7 @@ export default class Register extends Component {
             />
           </Form.Group>
 
-          <Button variant="dark" type="submit">
+          <Button variant="outline-light" type="submit">
             Register
           </Button>
         </Form>

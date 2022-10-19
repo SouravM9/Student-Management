@@ -46,7 +46,7 @@ router.route('/update/:id').post((req, res) => {
       student.roll = Number(req.body.roll);
       student.email = req.body.email;
       student.password = req.body.password;
-
+      student.assignment = "Submitted";
       student.save()
         .then(() => res.json('Student updated!'))
         .catch(err => res.status(400).json('Error: ' + err));
