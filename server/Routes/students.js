@@ -2,7 +2,7 @@ const router = require('express').Router();
 let Student = require('../Model/Student.model');
 
 router.route('/').get((req, res) => {
-  Student.find()
+  Student.find().sort({roll:1})
     .then(students => res.json(students))
     .catch(err => res.status(400).json('Error: ' + err));
 });
