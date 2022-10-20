@@ -7,4 +7,4 @@ Languages & Frameworks - MERN (MongoDB, Express, ReactJS & NodeJS), Javascript, 
 
 Live on https://student-management-sm9.herokuapp.com/
 
-![App Image](https://github.com/SouravM9/Student-Management/app-image.png)
+![App Image](https://github.com/SouravM9/Student-Management/blob/master/app-image.png)
