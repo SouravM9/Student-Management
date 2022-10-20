@@ -25,7 +25,7 @@ export default class Home extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:5000/students/')
+        axios.get('/students/')
             .then(response => {
                 this.setState({ students: response.data })
             })

@@ -17,11 +17,11 @@ app.use(express.json());
 //     () => { console.log('Database is connected') },
 //     err => { console.log('There is problem while connecting database ' + err) }
 //     );
-    
+
 // Connecting  to MongoDB Atlas
 const uri = process.env.ATLAS_URI;
 
-mongoose.connect(uri, {   
+mongoose.connect(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
@@ -37,6 +37,16 @@ mongoose.connection.on('error', (err) => {
 const studentsRouter = require('./Routes/students');
 
 app.use('/students', studentsRouter);
+
+
+
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static("client/build"));
+    // const path = require("path");
+    // app.get("*", (req, res) => {
+    //     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    // })
+}
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
