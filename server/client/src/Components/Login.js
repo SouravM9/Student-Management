@@ -1,92 +1,66 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import axios from 'axios';
 
-export default class Login extends Component {
+function Login() {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [isError, setIsError] = useState(false);
 
-    constructor(props) {
-        super(props);
+    const onSubmit = () => {
 
-        this.onChangeEmail = this.onChangeEmail.bind(this);
-        this.onChangePassword = this.onChangePassword.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
-
-        this.state = {
-            email: '',
-            password: '',
-            iserror: false
-        }
-    }
-
-    onChangeEmail(e) {
-        this.setState({
-            email: e.target.value
+        fetch("/students/login/" + email + "/" + password, {
+            method: "get",
+            headers: {
+                "Content-Type": "application/json"
+            }
         })
+        .then(res => res.json())
+      .then(result => {
+         if(result.length > 0)
+         {
+            window.location = '/detail/' + result[0]._id;
+         }
+         else
+         {
+            setIsError(true);
+         }
+      })
     }
 
-    onChangePassword(e) {
-        this.setState({
-            password: e.target.value
-        })
-    }
-
-    onSubmit(e) {
-        e.preventDefault();
-
-        axios.get('http://localhost:5000/students/login/' + this.state.email + '/' + this.state.password)
-            .then(response => {
-                if (response.data.length > 0){
-                    window.location = '/';
-                    
-                }
-                else{
-                    
-                    this.setState({
-                        iserror: true
-                    })
-                }
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-    }
-
-
-    render() {
-        return (
-            <div className="container">
+    return (
+        <div className="container">
             <h3>Sign in</h3>
 
-                <Form onSubmit={this.onSubmit}>
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Email</Form.Label>
-                        <Form.Control
-                            type="email"
-                            placeholder="Enter email"
-                            value={this.state.email}
-                            onChange={this.onChangeEmail}
-                            required
-                        />
-                    </Form.Group>
+            <Form onSubmit={(e) => e.preventDefault()}>
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>Email</Form.Label>
+                    <Form.Control
+                        type="email"
+                        placeholder="Enter email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="formBasicPassword">
-                        <Form.Label>Password</Form.Label>
-                        <Form.Control
-                            type="password"
-                            placeholder="Password"
-                            value={this.state.password}
-                            onChange={this.onChangePassword}
-                            required
-                        />
-                    </Form.Group>
-                    { this.state.iserror ? <div style={{ color: "red"}}className='errorMessage'>Invalid Credentials</div> : <div></div> }
-                    <Button variant="outline-light" type="submit">
-                        Login
-                    </Button>
-                </Form>
-            </div>
-        )
-    }
+                <Form.Group className="mb-3" controlId="formBasicPassword">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control
+                        type="password"
+                        placeholder="Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+                </Form.Group>
+                {isError ? <div style={{ color: "red" }} className='errorMessage'>Invalid Credentials</div> : <div></div>}
+                <Button variant="outline-light" type="submit" onClick={onSubmit}>
+                    Login
+                </Button>
+            </Form>
+        </div >
+    )
 }
 
+export default Login

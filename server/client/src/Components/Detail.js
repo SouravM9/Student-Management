@@ -1,99 +1,101 @@
-import React, { Component } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
-export default class Detail extends Component {
-    constructor(props) {
-        super(props);
+function Detail() {
 
-        this.state = {
-            name: '',
-            email: '',
-            roll: 0,
-            password: '',
-            assignment: "Not Submitted",
-            selectedFile: null
-        }
-    }
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [roll, setRoll] = useState(0);
+    const [password, setPassword] = useState('');
+    const [assignment, setAssignment] = useState('Not Submitted');
+    const [selectedFile, setSelectedFile] = useState(null);
 
-    onFileChange = event => {
-        this.setState({ selectedFile: event.target.files[0] });
+    const onFileChange = event => {
+        setSelectedFile(event.target.files[0]);
     };
 
-    onFileUpload = () => {
+    const onFileUpload = () => {
         const formData = new FormData();
         formData.append(
             "myFile",
-            this.state.selectedFile,
-            this.state.selectedFile.name
+            selectedFile,
+            selectedFile.name
         );
-        console.log(this.state.selectedFile);
+        console.log(selectedFile);
 
         // axios.post("api/uploadfile", formData);
 
-        this.updateStudent();
+        updateStudent();
     };
 
-    componentDidMount() {
-        var url = window.location.href;
-        var id = url.substring(url.lastIndexOf('/') + 1);
-        axios.get('http://localhost:5000/students/' + id)
-            .then(response => {
-                this.setState({
-                    name: response.data.name,
-                    roll: response.data.roll,
-                    email: response.data.email,
-                    password: response.data.password,
-                    assignment: response.data.assignment
-                })
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
+    var url = window.location.href;
+    var id = url.substring(url.lastIndexOf('/') + 1);
 
-    }
-
-    updateStudent() {
-        var url = window.location.href;
-        var id = url.substring(url.lastIndexOf('/') + 1);
-
-        const student = {
-            name: this.state.name,
-            roll: this.state.roll,
-            email: this.state.email,
-            password: this.state.password,
-            assignment: "Submitted"
+    fetch("/students/" + id, {
+        method: "get",
+        headers: {
+            "Content-Type": "application/json"
         }
+    })
+        .then(res => res.json())
+        .then(result => {
+            setRoll(result.roll);
+            setName(result.name);
+            setEmail(result.email);
+            setPassword(result.password);
+            setAssignment(result.assignment);
+        })
+        .catch(err => {
+            console.log(err);
+        });
 
-        console.log(student);
+    const updateStudent = () => {
+        var url = window.location.href;
+        var id = url.substring(url.lastIndexOf('/') + 1);
 
-        axios.post('http://localhost:5000/students/update/' + id, student)
-            .then(res => console.log(res.data));
+        fetch("/students/update/" + id, {
+            method: "post",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                name: name,
+                roll: roll,
+                email: email,
+                password: password,
+                assignment: "Submitted"
+            })
+        })
+            .then(res => res.json())
+            .then(data => {
+                window.location.reload();
+            })
+            .catch(err => {
+                console.log(err);
+            });
 
-         window.location = '/';
     }
+    return (
+        <div>
+            <h3>Detail</h3>
 
-    render() {
-        return (
-            <div>
-                <h3>Detail</h3>
-
-                <Card style={{ width: '18rem' }}>
-                    <Card.Body>
-                        <Card.Title>{this.state.name}</Card.Title>
-                        <Card.Subtitle className="mb-2 text-muted">{this.state.roll}</Card.Subtitle>
-                        <Card.Text>{this.state.email}</Card.Text>
-                        <Card.Text>{this.state.assignment}</Card.Text>
-                    </Card.Body>
-                </Card>
-                <div >
-                    <input type="file" onChange={this.onFileChange} />
-                    <Button onClick={this.onFileUpload}>
-                        Upload!
-                    </Button>
-                </div>
+            <Card style={{ width: '18rem' }}>
+                <Card.Body>
+                    <Card.Title>{name}</Card.Title>
+                    <Card.Subtitle className="mb-2 text-muted">{roll}</Card.Subtitle>
+                    <Card.Text>{email}</Card.Text>
+                    <Card.Text>{assignment}</Card.Text>
+                </Card.Body>
+            </Card>
+            <div >
+                <input type="file" onChange={onFileChange} />
+                <Button onClick={onFileUpload}>
+                    Upload!
+                </Button>
             </div>
-        )
-    }
+        </div>
+    )
 }
+
+export default Detail
