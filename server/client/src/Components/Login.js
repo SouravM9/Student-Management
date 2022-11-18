@@ -65,7 +65,7 @@ function Login() {
                 <Button variant="outline-light" type="submit" onClick={onSubmit}>
                     Login
                 </Button>
-                <Link to={"/register"}><h5>Already have an Account?</h5> </Link>
+                <Link to={"/register"}><h5>Don't have an Account?</h5> </Link>
             </Form>
         </div >
     )

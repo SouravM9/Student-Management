@@ -54,16 +54,19 @@ function Navbar() {
               : <div></div>
           }
 
-          <li className="navbar-item">
-            <Link to="/register" className="nav-link">Register</Link>
-          </li>
           {
             logoutButton ?
               <div></div>
               :
-              <li className="navbar-item">
-                <Link to="/login" className="nav-link">Sign in</Link>
-              </li>
+              <>
+                <li className="navbar-item">
+                  <Link to="/register" className="nav-link">Register</Link>
+                </li>
+                <li className="navbar-item">
+                  <Link to="/login" className="nav-link">Sign in</Link>
+                </li>
+              </>
+
           }
 
         </ul>
@@ -73,14 +76,16 @@ function Navbar() {
               className='buttonGroup'
               style={{ position: 'absolute', right: '0px' }}
             >
-              <Button onClick={logout}>Logout</Button>
+              <Button onClick={logout}
+                style={{ color: 'gold' }}
+              >Logout</Button>
             </div>
             :
             <div></div>
         }
 
       </div>
-    </nav>
+    </nav >
   )
 }
 

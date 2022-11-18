@@ -96,6 +96,25 @@ function Detail() {
             });
 
     }
+
+    const deleteRecord = () => {
+
+        var url = window.location.href;
+        var id = url.substring(url.lastIndexOf('/') + 1);
+
+        fetch("/students/" + id, {
+            method: "delete",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+            .then((res) => {
+                window.location = '/';
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
     return (
         <div>
             <h3>Detail</h3>
@@ -110,11 +129,18 @@ function Detail() {
             </Card>
             {
                 isAdmin ?
-                    <div></div>
+                    <div>
+                        <Button
+                            onClick={deleteRecord}
+                            style={{ color: 'red' }}
+                        >Delete Record</Button>
+                    </div>
                     :
                     <div className='uploading'>
                         <input type="file" onChange={onFileChange} />
-                        <Button onClick={onFileUpload}>
+                        <Button
+                            onClick={onFileUpload}
+                        >
                             Upload File
                         </Button>
                     </div>
