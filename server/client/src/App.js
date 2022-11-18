@@ -7,6 +7,8 @@ import Login from './Components/Login';
 import Register from './Components/Register';
 import Home from './Components/Home';
 import Detail from './Components/Detail';
+import RegisterFaculty from './Components/RegisterFaculty';
+
 
 function App() {
   return (
@@ -19,6 +21,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/detail/:id" element={<Detail />} />
+          <Route path="/registerfaculty" element={<RegisterFaculty />} />
         </Routes>
       </div>
     </Router>

@@ -12,14 +12,16 @@ router.route('/register').post((req, res) => {
   const roll = Number(req.body.roll);
   const email = req.body.email;
   const password = req.body.password;
-  const assignment = "Not Submitted"
+  const assignment = "Not Submitted";
+  const userType = req.body.userType;
 
   const newStudent = new Student({
     name,
     roll,
     email,
     password,
-    assignment
+    assignment,
+    userType
   });
 
   newStudent.save()

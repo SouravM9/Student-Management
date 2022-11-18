@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { Link } from 'react-router-dom';
 
 function Login() {
     const [email, setEmail] = useState('');
@@ -15,17 +16,15 @@ function Login() {
                 "Content-Type": "application/json"
             }
         })
-        .then(res => res.json())
-      .then(result => {
-         if(result.length > 0)
-         {
-            window.location = '/detail/' + result[0]._id;
-         }
-         else
-         {
-            setIsError(true);
-         }
-      })
+            .then(res => res.json())
+            .then(result => {
+                if (result.length > 0) {
+                    window.location = '/detail/' + result[0]._id;
+                }
+                else {
+                    setIsError(true);
+                }
+            })
     }
 
     return (
@@ -58,6 +57,7 @@ function Login() {
                 <Button variant="outline-light" type="submit" onClick={onSubmit}>
                     Login
                 </Button>
+                <Link to={"/register"}><h5>Already have an Account?</h5> </Link>
             </Form>
         </div >
     )

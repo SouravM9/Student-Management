@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { Link } from 'react-router-dom';
 
-function Register() {
+function RegisterFaculty() {
 
     const [name, setName] = useState('');
     const [roll, setRoll] = useState('');
@@ -21,7 +20,8 @@ function Register() {
                 roll: roll,
                 name: name,
                 password: password,
-                email: email
+                email: email,
+                userType: 'admin'
             })
         })
             .then(res => res.json())
@@ -31,21 +31,21 @@ function Register() {
                 console.log(err);
             });
 
-        window.location = '/login';
+         window.location = '/login';
     }
 
     return (
         <div className="container">
-            <h3>New Registration</h3>
+            <h3>Faculty Registration</h3>
 
             <Form onSubmit={(e) => {
                 e.preventDefault();
             }}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>University Roll</Form.Label>
+                    <Form.Label>Employee Id</Form.Label>
                     <Form.Control
                         type="text"
-                        placeholder="Enter University Roll"
+                        placeholder="Enter Employee Id"
                         value={roll}
                         onChange={(e) => setRoll(e.target.value)}
                         required
@@ -88,10 +88,9 @@ function Register() {
                 <Button variant="outline-light" type="submit" onClick={onSubmit}>
                     Register
                 </Button>
-                <Link to={"/registerfaculty"}><h5>Not a student?</h5> </Link>
             </Form>
         </div>
     )
 }
 
-export default Register
+export default RegisterFaculty

@@ -8,6 +8,12 @@ const studentSchema = new Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     assignment: { type: String, required: true },
+    userType: {
+        type: String,
+        enum: ['student', 'admin'],
+        default: 'student',
+        required: true
+    },
 }, {
     timestamps: true,
 });
