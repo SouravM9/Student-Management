@@ -19,7 +19,15 @@ function Login() {
             .then(res => res.json())
             .then(result => {
                 if (result.length > 0) {
-                    window.location = '/detail/' + result[0]._id;
+                    localStorage.setItem("currentUser", result[0]._id);
+                    if(result[0].userType === 'student')
+                    {
+                        window.location = '/detail/' + result[0]._id;
+                    }
+                    else
+                    {
+                        window.location = '/';
+                    }                
                 }
                 else {
                     setIsError(true);

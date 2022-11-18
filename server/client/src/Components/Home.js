@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
 import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
@@ -18,16 +18,19 @@ function Home() {
 
     const [students, setStudents] = useState([]);
 
-    fetch("/students", {
-        method: "get",
-        headers: {
-            "Content-Type": "application/json"
-        }
-    })
-        .then(res => res.json())
-        .then(result => {
-            setStudents(result);
+    useEffect(() => {
+
+        fetch("/students", {
+            method: "get",
+            headers: {
+                "Content-Type": "application/json"
+            }
         })
+            .then(res => res.json())
+            .then(result => {
+                setStudents(result);
+            })
+    }, [])
 
     return (
         <div>

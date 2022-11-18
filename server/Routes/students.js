@@ -2,7 +2,8 @@ const router = require('express').Router();
 let Student = require('../Model/Student.model');
 
 router.route('/').get((req, res) => {
-  Student.find().sort({roll:1})
+  Student.find({ userType: 'student' })
+    .sort({ roll: 1 })
     .then(students => res.json(students))
     .catch(err => res.status(400).json('Error: ' + err));
 });
@@ -57,8 +58,8 @@ router.route('/update/:id').post((req, res) => {
 });
 
 router.route('/login/:p1?/:p2?').get((req, res) => {
-  Student.find({email: req.params.p1 ,password: req.params.p2 })
-  .then(student => res.json(student))
+  Student.find({ email: req.params.p1, password: req.params.p2 })
+    .then(student => res.json(student))
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
