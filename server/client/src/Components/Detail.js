@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
@@ -10,6 +10,26 @@ function Detail() {
     const [password, setPassword] = useState('');
     const [assignment, setAssignment] = useState('Not Submitted');
     const [selectedFile, setSelectedFile] = useState(null);
+    const [isAdmin, setIsAdmin] = useState(false);
+
+    useEffect(() => {
+
+        fetch("/students/" + localStorage.getItem("currentUser"), {
+            method: "get",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+            .then(res => res.json())
+            .then(result => {
+                if (result.userType === 'admin') {
+                    setIsAdmin(true);
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }, [])
 
     const onFileChange = event => {
         setSelectedFile(event.target.files[0]);
@@ -88,12 +108,18 @@ function Detail() {
                     <Card.Text>{assignment}</Card.Text>
                 </Card.Body>
             </Card>
-            <div >
-                <input type="file" onChange={onFileChange} />
-                <Button onClick={onFileUpload}>
-                    Upload!
-                </Button>
-            </div>
+            {
+                isAdmin ?
+                    <div></div>
+                    :
+                    <div className='uploading'>
+                        <input type="file" onChange={onFileChange} />
+                        <Button onClick={onFileUpload}>
+                            Upload File
+                        </Button>
+                    </div>
+            }
+
         </div>
     )
 }
