@@ -69,7 +69,12 @@ function Navbar() {
         </ul>
         {
           logoutButton ?
-            <div className='buttonGroup'><Button onClick={logout}>Logout</Button></div>
+            <div
+              className='buttonGroup'
+              style={{ position: 'absolute', right: '0px' }}
+            >
+              <Button onClick={logout}>Logout</Button>
+            </div>
             :
             <div></div>
         }
