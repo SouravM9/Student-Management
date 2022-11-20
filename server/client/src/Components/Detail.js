@@ -11,6 +11,7 @@ function Detail() {
     const [assignment, setAssignment] = useState('Not Submitted');
     const [selectedFile, setSelectedFile] = useState(null);
     const [isAdmin, setIsAdmin] = useState(false);
+    const [isStudent, setIsStudent] = useState(false);
 
     useEffect(() => {
 
@@ -65,6 +66,10 @@ function Detail() {
             setEmail(result.email);
             setPassword(result.password);
             setAssignment(result.assignment);
+            if(result.userType === 'student')
+            {
+                setIsStudent(true);
+            }
         })
         .catch(err => {
             console.log(err);
@@ -124,7 +129,9 @@ function Detail() {
                     <Card.Title>{name}</Card.Title>
                     <Card.Subtitle className="mb-2 text-muted">{roll}</Card.Subtitle>
                     <Card.Text>{email}</Card.Text>
-                    <Card.Text>{assignment}</Card.Text>
+                    {
+                        isStudent ? <Card.Text>{assignment}</Card.Text> : <></>
+                    }
                 </Card.Body>
             </Card>
             {
