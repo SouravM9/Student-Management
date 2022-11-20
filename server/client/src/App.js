@@ -9,6 +9,7 @@ import Home from './Components/Home';
 import Detail from './Components/Detail';
 import RegisterFaculty from './Components/RegisterFaculty';
 import Faculties from './Components/Faculties';
+import EditDetails from './Components/EditDetails';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/detail/:id" element={<Detail />} />
           <Route path="/registerfaculty" element={<RegisterFaculty />} />
           <Route path="/faculties" element={<Faculties />} />
+          <Route path="/edit/:id" element={<EditDetails />} />
         </Routes>
       </div>
     </Router>

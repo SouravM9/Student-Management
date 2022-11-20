@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import { Link } from 'react-router-dom';
+
 
 function Detail() {
 
+    const [id, setId] = useState('');
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [roll, setRoll] = useState(0);
@@ -14,6 +17,9 @@ function Detail() {
     const [isStudent, setIsStudent] = useState(false);
 
     useEffect(() => {
+
+        let url = window.location.href;
+        setId(url.substring(url.lastIndexOf('/') + 1));
 
         fetch("/students/" + localStorage.getItem("currentUser"), {
             method: "get",
@@ -50,9 +56,6 @@ function Detail() {
         updateStudent();
     };
 
-    var url = window.location.href;
-    var id = url.substring(url.lastIndexOf('/') + 1);
-
     fetch("/students/" + id, {
         method: "get",
         headers: {
@@ -66,8 +69,7 @@ function Detail() {
             setEmail(result.email);
             setPassword(result.password);
             setAssignment(result.assignment);
-            if(result.userType === 'student')
-            {
+            if (result.userType === 'student') {
                 setIsStudent(true);
             }
         })
@@ -76,8 +78,6 @@ function Detail() {
         });
 
     const updateStudent = () => {
-        var url = window.location.href;
-        var id = url.substring(url.lastIndexOf('/') + 1);
 
         fetch("/students/update/" + id, {
             method: "post",
@@ -104,8 +104,6 @@ function Detail() {
 
     const deleteRecord = () => {
 
-        var url = window.location.href;
-        var id = url.substring(url.lastIndexOf('/') + 1);
 
         fetch("/students/" + id, {
             method: "delete",
@@ -121,39 +119,53 @@ function Detail() {
             })
     }
     return (
-        <div>
-            <h3>Detail</h3>
-
-            <Card style={{ width: '18rem' }}>
-                <Card.Body>
-                    <Card.Title>{name}</Card.Title>
-                    <Card.Subtitle className="mb-2 text-muted">{roll}</Card.Subtitle>
-                    <Card.Text>{email}</Card.Text>
-                    {
-                        isStudent ? <Card.Text>{assignment}</Card.Text> : <></>
-                    }
-                </Card.Body>
-            </Card>
+        <>
             {
-                isAdmin ?
+                name ?
+
                     <div>
-                        <Button
-                            onClick={deleteRecord}
-                            style={{ color: 'red' }}
-                        >Delete Record</Button>
+                        <h3> Detail </h3>
+
+                        <Card style={{ width: '18rem' }}>
+                            <Card.Body>
+                                <Card.Title>{name}</Card.Title>
+                                <Card.Subtitle className="mb-2 text-muted">{roll}</Card.Subtitle>
+                                <Card.Text>{email}</Card.Text>
+                                {
+                                    isStudent ? <Card.Text>{assignment}</Card.Text> : <></>
+                                }
+                            </Card.Body>
+                        </Card>
+                        {
+                            isAdmin ?
+                                <div>
+                                    <Link to={'/edit/' + id}>
+                                        <Button
+                                            style={{ color: 'green' }}
+                                        >Edit</Button>
+                                    </Link>
+
+                                    <Button
+                                        onClick={deleteRecord}
+                                        style={{ color: 'red' }}
+                                    >Delete</Button>
+                                </div>
+                                :
+                                <div className='uploading'>
+                                    <input type="file" onChange={onFileChange} />
+                                    <Button
+                                        onClick={onFileUpload}
+                                    >
+                                        Upload File
+                                    </Button>
+                                </div>
+                        }
                     </div>
                     :
-                    <div className='uploading'>
-                        <input type="file" onChange={onFileChange} />
-                        <Button
-                            onClick={onFileUpload}
-                        >
-                            Upload File
-                        </Button>
-                    </div>
+                    <h1>Loading.. Please Wait!!</h1>
             }
 
-        </div>
+        </>
     )
 }
 
