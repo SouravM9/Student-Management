@@ -11,10 +11,9 @@ Student Management Application is a MERN Stack web-based application designed fo
 - Javascript
 - Bootstrap
 - Cors
-- Axios
 - React-Bootstrap
 - React-Router-DOM
 
-[Hosted Live](https://student-management-sm9.herokuapp.com/)
+<h3>[Hosted Live](https://student-portal-sm.herokuapp.com/)</h3>
 
 ![App Image](https://github.com/SouravM9/Student-Management/blob/master/app-image.png)
