@@ -8,7 +8,7 @@ import Register from './Components/Register';
 import Home from './Components/Home';
 import Detail from './Components/Detail';
 import RegisterFaculty from './Components/RegisterFaculty';
-
+import Faculties from './Components/Faculties';
 
 function App() {
   return (
@@ -22,6 +22,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/detail/:id" element={<Detail />} />
           <Route path="/registerfaculty" element={<RegisterFaculty />} />
+          <Route path="/faculties" element={<Faculties />} />
         </Routes>
       </div>
     </Router>

@@ -8,6 +8,13 @@ router.route('/').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.route('/faculties').get((req, res) => {
+  Student.find({ userType: 'admin' })
+    .sort({ roll: 1 })
+    .then(students => res.json(students))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
 router.route('/register').post((req, res) => {
   const name = req.body.name;
   const roll = Number(req.body.roll);

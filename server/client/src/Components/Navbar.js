@@ -48,9 +48,15 @@ function Navbar() {
         <ul className="navbar-nav mr-auto">
           {
             showAll ?
-              <li className="navbar-item">
-                <Link to="/" className="nav-link">Home</Link>
-              </li>
+              <>
+                <li className="navbar-item">
+                  <Link to="/" className="nav-link">All Students</Link>
+                </li>
+                <li className="navbar-item">
+                  <Link to="/faculties" className="nav-link">All Faculties</Link>
+                </li>
+              </>
+
               : <div></div>
           }
 
