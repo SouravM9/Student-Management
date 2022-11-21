@@ -1,6 +1,7 @@
 ## Student Management App
 
-Student Management Application is a MERN Stack web-based application designed for colleges to keep track of records of students. It has all CRUD(Create-Read-Update-delete) Functionalities. It currently has a straightforward functionality where students can register themselves and submit their assignments.
+Student Management Application is a MERN Stack web-based application designed for colleges to keep track of records of students. It has all CRUD(Create-Read-Update-delete) Functionalities.
+
 
 ## Languages & Frameworks 
 
@@ -26,10 +27,13 @@ Student Management Application is a MERN Stack web-based application designed fo
 
 ## Hosted Live on Below Link
 
-<a href="https://student-portal-sm.herokuapp.com/"> </a>
+<a href="https://student-portal-sm.herokuapp.com/">Click Here!!</a>
 
 ## Demo
 
+<div> 
 <img src="/Demo/Student-Portal-Demo-01.gif" alt="Demo1">
 <img src="/Demo/Student-Portal-Demo-02.gif" alt="Demo2">
+</div>
+
 
